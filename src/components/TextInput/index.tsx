@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 
 import { Path, UseFormRegister } from 'react-hook-form';
 
-import { FormValues } from '../FormComponent';
+import { FormValues } from '../../utils/configureUserData';
 
 import style from './styles.module.css';
 

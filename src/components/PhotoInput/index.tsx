@@ -3,7 +3,7 @@ import { ChangeEvent, FC, useState } from 'react';
 import { Path, UseFormRegister } from 'react-hook-form';
 
 import photoForm from '../../assets/photo.svg';
-import { FormValues } from '../FormComponent';
+import { FormValues } from '../../utils/configureUserData';
 
 import style from './styles.module.css';
 

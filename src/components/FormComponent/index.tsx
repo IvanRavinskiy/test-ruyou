@@ -5,16 +5,14 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 
 import { api } from '../../api';
+import { configureUserData, FormValues } from '../../utils/configureUserData';
 import { PhotoInput } from '../PhotoInput';
 import { TextInput } from '../TextInput';
 
 import style from './styles.module.css';
 
-export type FormValues = {
-  name: string;
-  surname: string;
-  patronymic: string;
-  image: null;
+type FormComponentProps = {
+  setResponse: (text: string) => void;
 };
 
 const MIN_SYMBOLS = 2;
@@ -31,25 +29,18 @@ const formSchema = Yup.object({
   image: Yup.mixed().required('Required'),
 });
 
-export const FormComponent: FC = () => {
+export const FormComponent: FC<FormComponentProps> = props => {
+  const { setResponse } = props;
   const { register, handleSubmit, setValue } = useForm<FormValues>({
     resolver: yupResolver(formSchema),
   });
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
-    const formData = new FormData();
+    const userData = configureUserData(data);
 
-    formData.set('action', 'send_data');
-    // @ts-ignore
-    formData.set('image', data.image);
-    formData.set('contact[name]', data.name);
-    formData.set('contact[surname]', data.surname);
-    formData.set('contact[patronymic]', data.patronymic);
-    // @ts-ignore
-    formData.set('id', 1);
-    api(formData).then(res => {
-      console.log(res);
-    });
+    const res = await api(userData);
+
+    setResponse(res.status);
   };
 
   return (
