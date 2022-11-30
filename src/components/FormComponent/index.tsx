@@ -1,50 +1,68 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 
-import { Form, Formik } from 'formik';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import * as Yup from 'yup';
+
+import { api } from '../../api';
+import { PhotoInput } from '../PhotoInput';
+import { TextInput } from '../TextInput';
 
 import style from './styles.module.css';
 
-import { PhotoInput, TextInput } from 'components';
+export type FormValues = {
+  name: string;
+  surname: string;
+  patronymic: string;
+  image: null;
+};
 
 const MIN_SYMBOLS = 2;
+const formSchema = Yup.object({
+  name: Yup.string()
+    .min(MIN_SYMBOLS, `Must be min ${MIN_SYMBOLS} characters`)
+    .required('Required'),
+  surname: Yup.string()
+    .min(MIN_SYMBOLS, `Must be min ${MIN_SYMBOLS} characters`)
+    .required('Required'),
+  patronymic: Yup.string()
+    .min(MIN_SYMBOLS, `Must be min ${MIN_SYMBOLS} characters`)
+    .required('Required'),
+  image: Yup.mixed().required('Required'),
+});
 
 export const FormComponent: FC = () => {
-  const FormSchema = Yup.object({
-    name: Yup.string().min(MIN_SYMBOLS, 'Must be min 2 characters').required('Required'),
-    surname: Yup.string()
-      .min(MIN_SYMBOLS, 'Must be min 2 characters')
-      .required('Required'),
-    patronymic: Yup.string()
-      .min(MIN_SYMBOLS, 'Must be min 2 characters')
-      .required('Required'),
+  const { register, handleSubmit, setValue } = useForm<FormValues>({
+    resolver: yupResolver(formSchema),
   });
 
+  const onSubmit: SubmitHandler<FormValues> = async data => {
+    const formData = new FormData();
+
+    formData.set('action', 'send_data');
+    // @ts-ignore
+    formData.set('image', data.image);
+    formData.set('contact[name]', data.name);
+    formData.set('contact[surname]', data.surname);
+    formData.set('contact[patronymic]', data.patronymic);
+    // @ts-ignore
+    formData.set('id', 1);
+    api(formData).then(res => {
+      console.log(res);
+    });
+  };
+
   return (
-    <Formik
-      initialValues={{
-        name: '',
-        surname: '',
-        patronymic: '',
-      }}
-      validationSchema={FormSchema}
-      onSubmit={values => {
-        alert(JSON.stringify(values, null));
-      }}
-    >
-      {({ setFieldValue }) => (
-        <Form>
-          <TextInput title="Name:" name="name" />
-          <TextInput title="Surname:" name="surname" />
-          <TextInput title="Patronymic:" name="patronymic" />
-          <PhotoInput setFieldValue={setFieldValue} />
-          <div className={style.btnSubmitContainer}>
-            <button type="submit" className={style.btnSubmit}>
-              Save
-            </button>
-          </div>
-        </Form>
-      )}
-    </Formik>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <TextInput label="name" title="Name" register={register} />
+      <TextInput label="surname" title="Surname" register={register} />
+      <TextInput label="patronymic" title="Patronymic" register={register} />
+      <PhotoInput label="image" title="Image" register={register} setValue={setValue} />
+      <div className={style.btnSubmitContainer}>
+        <button type="submit" className={style.btnSubmit}>
+          Save
+        </button>
+      </div>
+    </form>
   );
 };

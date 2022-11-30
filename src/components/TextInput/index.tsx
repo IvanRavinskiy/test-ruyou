@@ -1,24 +1,26 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 
-import { ErrorMessage, Field } from 'formik';
+import { Path, UseFormRegister } from 'react-hook-form';
+
+import { FormValues } from '../FormComponent';
 
 import style from './styles.module.css';
 
 type TextInputProps = {
+  label: Path<FormValues>;
   title: string;
-  name: string;
+  register: UseFormRegister<FormValues>;
 };
 
 export const TextInput: FC<TextInputProps> = props => {
-  const { title, name } = props;
+  const { label, title, register } = props;
 
   return (
     <>
-      <label htmlFor={name} className={style.label}>
-        {title}
+      <label htmlFor={label} className={style.label}>
+        {title}:
       </label>
-      <Field className={style.textInput} type="text" name={name} />
-      <ErrorMessage name={name} component="div" className={style.formValidateText} />
+      <input {...register(label)} className={style.textInput} />
     </>
   );
 };
