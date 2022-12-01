@@ -6,10 +6,8 @@ import * as Yup from 'yup';
 
 import { api } from '../../api';
 import { configureUserData, FormValues } from '../../utils/configureUserData';
-import { PhotoInput } from '../PhotoInput';
-import { TextInput } from '../TextInput';
 
-import style from './styles.module.css';
+import { Button, PhotoInput, TextInput } from 'components';
 
 type FormComponentProps = {
   setResponse: (text: string) => void;
@@ -49,11 +47,7 @@ export const FormComponent: FC<FormComponentProps> = props => {
       <TextInput label="surname" title="Surname" register={register} />
       <TextInput label="patronymic" title="Patronymic" register={register} />
       <PhotoInput label="image" title="Image" register={register} setValue={setValue} />
-      <div className={style.btnSubmitContainer}>
-        <button type="submit" className={style.btnSubmit}>
-          Save
-        </button>
-      </div>
+      <Button textChildren="Save" />
     </form>
   );
 };

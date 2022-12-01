@@ -1,7 +1,7 @@
-.btnSubmitContainer{
+.btnContainer{
     margin-top: 48px;
 }
-.btnSubmit{
+.btn{
     width: 343px;
     height: 50px;
     background-color: #007AFF;
