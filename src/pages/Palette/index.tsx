@@ -1,20 +1,24 @@
 import React, { FC, useState } from 'react';
 
-import { HexColorPicker } from 'react-colorful';
-
 import { Button, ColorBlock, Modal } from '../../components';
-import { useAppSelector } from '../../state';
+import { useAppDispatch, useAppSelector } from '../../state';
+import { ADD_COLOR } from '../../state/reducers/palette';
 
 import style from './styles.module.css';
 
 export const Palette: FC = () => {
   const [pickerColor, setPickerColor] = useState('#AABBCC');
   const [isShowPicker, setIsShowPicker] = useState(false);
-
+  const dispatch = useAppDispatch();
   const colors = useAppSelector(state => state.palette.colors);
 
   const addColor = (): void => {
     setIsShowPicker(true);
+  };
+
+  const closeModal = (): void => {
+    setIsShowPicker(false);
+    dispatch(ADD_COLOR(pickerColor));
   };
 
   return (
@@ -25,9 +29,11 @@ export const Palette: FC = () => {
         })}
       </div>
       {isShowPicker && (
-        <Modal setShow={setIsShowPicker} bgColor={pickerColor}>
-          <HexColorPicker color={pickerColor} onChange={setPickerColor} />
-        </Modal>
+        <Modal
+          setColor={closeModal}
+          currentColor={pickerColor}
+          onChange={setPickerColor}
+        />
       )}
       <Button onClick={addColor} textChildren="Add color" />
     </div>

@@ -2,12 +2,20 @@ import React, { FC, useState } from 'react';
 
 import close from '../../assets/Icon.svg';
 import { useAppDispatch } from '../../state';
-import { Colors, REMOVE_COLOR } from '../../state/reducers/palette';
+import { CHANGE_COLOR, REMOVE_COLOR } from '../../state/reducers/palette';
+import { Modal } from '../Modal';
 
 import style from './styles.module.css';
 
-export const ColorBlock: FC<Colors> = props => {
+type ColorBlockProps = {
+  id: number;
+  color: string;
+};
+
+export const ColorBlock: FC<ColorBlockProps> = props => {
   const { id, color } = props;
+  const [currentColor, setCurrentColor] = useState(color);
+  const [isShowColorPicker, setIsShowColorPicker] = useState(false);
   const [isShowClose, setIsShowClose] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -16,10 +24,18 @@ export const ColorBlock: FC<Colors> = props => {
     dispatch(REMOVE_COLOR(id));
   };
 
+  const openColorPicker = (): void => {
+    setIsShowColorPicker(true);
+  };
+
+  const closeModal = (): void => {
+    setIsShowColorPicker(false);
+    dispatch(CHANGE_COLOR({ currentColor, id }));
+  };
+
   return (
     <div
       key={id}
-      role="group"
       className={style.colorBlock}
       style={{ background: color }}
       onMouseOver={() => setIsShowClose(true)}
@@ -30,6 +46,16 @@ export const ColorBlock: FC<Colors> = props => {
         <div role="none" onClick={removeColor} className={style.close}>
           <img className={style.photo} alt="close" src={close} />
         </div>
+      )}
+      <button className={style.fakeBtn} type="button" onClick={openColorPicker}>
+        change
+      </button>
+      {isShowColorPicker && (
+        <Modal
+          setColor={closeModal}
+          currentColor={currentColor}
+          onChange={setCurrentColor}
+        />
       )}
     </div>
   );

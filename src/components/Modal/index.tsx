@@ -1,30 +1,24 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 
-import { useAppDispatch } from '../../state';
-import { ADD_COLOR } from '../../state/reducers/palette';
+import { HexColorPicker } from 'react-colorful';
 
 import style from './styles.module.css';
 
 type ModalType = {
-  setShow: (isShow: boolean) => void;
-  bgColor?: string;
-  children: ReactNode;
+  setColor: () => void;
+  currentColor: string;
+  onChange: (color: string) => void;
 };
 
 export const Modal: React.FC<ModalType> = props => {
-  const { setShow, children, bgColor } = props;
-
-  const dispatch = useAppDispatch();
-
-  const closeModal = (): void => {
-    setShow(false);
-    dispatch(ADD_COLOR(bgColor));
-  };
+  const { setColor, currentColor, onChange } = props;
 
   return (
     <div className={style.body}>
-      <div role="presentation" onClick={closeModal} className={style.veil} />
-      <div className={style.modal}>{children}</div>
+      <div role="presentation" onClick={setColor} className={style.veil} />
+      <div className={style.modal}>
+        <HexColorPicker color={currentColor} onChange={onChange} />
+      </div>
     </div>
   );
 };

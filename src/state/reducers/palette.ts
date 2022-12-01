@@ -31,8 +31,18 @@ const paletteSlice = createSlice({
         state.colors.splice(objWithIdIndex, 1);
       }
     },
+    [PALETTE.CHANGE_COLOR](state, action) {
+      const objWithIdIndex = state.colors.findIndex(obj => obj.id === action.payload.id);
+
+      if (objWithIdIndex > -1) {
+        state.colors[objWithIdIndex] = {
+          color: action.payload.currentColor,
+          id: action.payload.id,
+        };
+      }
+    },
   },
 });
 
 export const { reducer: paletteReducer } = paletteSlice;
-export const { ADD_COLOR, REMOVE_COLOR } = paletteSlice.actions;
+export const { ADD_COLOR, REMOVE_COLOR, CHANGE_COLOR } = paletteSlice.actions;
