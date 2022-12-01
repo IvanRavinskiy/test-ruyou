@@ -1,0 +1,17 @@
+.link {
+    font-family: 'Gotham Pro', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 22px;
+    letter-spacing: -0.41px;
+    color: #FFFFFF;
+}
+
+.linkContainer{
+    display: flex;
+    flex-direction: row;
+    width: 343px;
+    justify-content: space-around;
+    margin-bottom: 51px;
+}

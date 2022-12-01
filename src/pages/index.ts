@@ -1,1 +1,2 @@
-export { Form } from './form/Form';
+export { Form } from './Form';
+export { Palette } from './Palette';
