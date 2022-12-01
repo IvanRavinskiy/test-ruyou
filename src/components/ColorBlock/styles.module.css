@@ -1,0 +1,11 @@
+.colorBlock {
+    width: 54px;
+    height: 54px;
+    border-radius: 5px;
+    margin: 12px;
+}
+.close{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}

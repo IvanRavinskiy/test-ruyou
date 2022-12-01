@@ -1,11 +1,9 @@
-.colorBlock {
-    width: 54px;
-    height: 54px;
-    border-radius: 5px;
-}
-
 .colorsContainer{
     width: 343px;
     height: 400px;
     margin-bottom: 48px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow: scroll;
 }
