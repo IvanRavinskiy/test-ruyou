@@ -3,6 +3,7 @@ import React, { FC, useState } from 'react';
 import close from '../../assets/Icon.svg';
 import { useAppDispatch } from '../../state';
 import { CHANGE_COLOR, REMOVE_COLOR } from '../../state/reducers/palette';
+import { memo } from '../../utils/memo';
 import { Modal } from '../Modal';
 
 import style from './styles.module.css';
@@ -12,7 +13,7 @@ type ColorBlockProps = {
   color: string;
 };
 
-export const ColorBlock: FC<ColorBlockProps> = props => {
+export const ColorBlock: FC<ColorBlockProps> = memo(props => {
   const { id, color } = props;
   const [currentColor, setCurrentColor] = useState(color);
   const [isShowColorPicker, setIsShowColorPicker] = useState(false);
@@ -59,4 +60,4 @@ export const ColorBlock: FC<ColorBlockProps> = props => {
       )}
     </div>
   );
-};
+});

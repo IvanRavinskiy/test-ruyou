@@ -31,8 +31,6 @@
     box-sizing: border-box;
 }
 
-.formValidateText{
-    position: absolute;
-    bottom: -18px;
+.error{
     color: #ee1f48;
 }

@@ -1,5 +1,11 @@
-.App {
+.container {
+    background-color: #333131;
+    height: 110vh;
+    padding: 43px;
+}
+.innerContainer {
     background-color: #000000;
     border-radius: 28px;
     padding: 36px 51px;
+    height: 100vh;
 }

@@ -29,7 +29,7 @@
     height: 60px;
 }
 
-.formValidateText{
+.error{
     position: absolute;
     bottom: -18px;
     color: #ee1f48;

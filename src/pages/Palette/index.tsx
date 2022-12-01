@@ -6,7 +6,7 @@ import { ADD_COLOR } from '../../state/reducers/palette';
 
 import style from './styles.module.css';
 
-export const Palette: FC = () => {
+export const Palette: FC = React.memo(() => {
   const [pickerColor, setPickerColor] = useState('#AABBCC');
   const [isShowPicker, setIsShowPicker] = useState(false);
   const dispatch = useAppDispatch();
@@ -38,4 +38,4 @@ export const Palette: FC = () => {
       <Button onClick={addColor} textChildren="Add color" />
     </div>
   );
-};
+});

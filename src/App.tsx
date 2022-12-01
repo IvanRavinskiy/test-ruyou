@@ -10,12 +10,14 @@ import { Form, Palette } from 'pages';
 
 export const App: FC = () => {
   return (
-    <div className={styles.App}>
-      <Header />
-      <Routes>
-        <Route path={ROUTES.FORM} element={<Form />} />
-        <Route path={ROUTES.PALETTE} element={<Palette />} />
-      </Routes>
+    <div className={styles.container}>
+      <div className={styles.innerContainer}>
+        <Header />
+        <Routes>
+          <Route path={ROUTES.FORM} element={<Form />} />
+          <Route path={ROUTES.PALETTE} element={<Palette />} />
+        </Routes>
+      </div>
     </div>
   );
 };

@@ -1,39 +1,42 @@
-import { ChangeEvent, FC, useState } from 'react';
+import React, { ChangeEvent, FC } from 'react';
 
-import { Path, UseFormRegister } from 'react-hook-form';
+import { FieldErrors, Path, UseFormRegister } from 'react-hook-form';
 
-import photoForm from '../../assets/photo.svg';
 import { FormValues } from '../../utils/configureUserData';
 
 import style from './styles.module.css';
+
+import { memo } from 'utils/memo';
 
 type PhotoInputProps = {
   label: Path<FormValues>;
   title: string;
   register: UseFormRegister<FormValues>;
-  setValue: any;
+  error: FieldErrors<FormValues>;
+  avatarPreview: string;
+  addPhoto: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
-export const PhotoInput: FC<PhotoInputProps> = props => {
-  const { label, title, register, setValue } = props;
-  const [avatarPreview, setAvatarPreview] = useState(photoForm);
-
-  const addPhoto = (event: ChangeEvent<HTMLInputElement>): void => {
-    if (event.target.files) {
-      setAvatarPreview(URL.createObjectURL(event.target.files?.[0]));
-      setValue(label, event.target.files?.[0]);
-    }
-  };
+export const PhotoInput: FC<PhotoInputProps> = memo(props => {
+  const { label, title, register, error, addPhoto, avatarPreview } = props;
 
   return (
     <>
       <label htmlFor={label} className={style.label}>
-        {title}:
+        {title}
       </label>
       <label className={style.inputPhotoContainer} htmlFor={label}>
         <img className={style.photo} alt="avatar" src={avatarPreview} />
       </label>
-      <input hidden type="file" {...register(label)} id={label} onChange={addPhoto} />
+      <input
+        hidden
+        type="file"
+        {...register(label)}
+        id={label}
+        onChange={addPhoto}
+        accept=".png,.jpg,.jpeg,.gif,.svg,.bmp"
+      />
+      <p className={style.error}>{error[label]?.message}</p>
     </>
   );
-};
+});

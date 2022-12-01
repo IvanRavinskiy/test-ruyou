@@ -2,12 +2,14 @@ import React, { FC } from 'react';
 
 import style from './styles.module.css';
 
+import { memo } from 'utils/memo';
+
 type ButtonProps = {
   textChildren: string;
   onClick?: () => void;
 };
 
-export const Button: FC<ButtonProps> = props => {
+export const Button: FC<ButtonProps> = memo(props => {
   const { textChildren, onClick } = props;
 
   return (
@@ -17,4 +19,4 @@ export const Button: FC<ButtonProps> = props => {
       </button>
     </div>
   );
-};
+});

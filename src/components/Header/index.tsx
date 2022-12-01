@@ -1,20 +1,28 @@
 import React, { FC } from 'react';
 
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import { ROUTES } from '../../constants/routes';
 
 import style from './styles.module.css';
 
-export const Header: FC = () => {
+export const Header: FC = React.memo(() => {
   return (
     <nav className={style.linkContainer}>
-      <Link className={style.link} to={ROUTES.FORM}>
+      <NavLink
+        className={style.link}
+        style={({ isActive }) => (isActive ? undefined : { textDecoration: 'none' })}
+        to={ROUTES.FORM}
+      >
         Form
-      </Link>
-      <Link className={style.link} to={ROUTES.PALETTE}>
+      </NavLink>
+      <NavLink
+        className={style.link}
+        style={({ isActive }) => (isActive ? undefined : { textDecoration: 'none' })}
+        to={ROUTES.PALETTE}
+      >
         Palette
-      </Link>
+      </NavLink>
     </nav>
   );
-};
+});
